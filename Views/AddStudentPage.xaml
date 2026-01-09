@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Week6_RESTFULAPI.Views.AddStudentPage"
+             Title="AddStudentPage">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Name Entry -->
+            <Frame Padding="0" BorderColor="#E0E0E0" CornerRadius="8">
+                <VerticalStackLayout Spacing="5" Padding="15">
+                    <Label Text="Student Name" 
+                           FontSize="12" 
+                           TextColor="#757575"/>
+                    <Entry Placeholder="Enter full name"
+                           Text="{Binding Name}"
+                           FontSize="16"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Program Entry -->
+            <Frame Padding="0" BorderColor="#E0E0E0" CornerRadius="8">
+                <VerticalStackLayout Spacing="5" Padding="15">
+                    <Label Text="Program" 
+                           FontSize="12" 
+                           TextColor="#757575"/>
+                    <Entry Placeholder="e.g., CS, SE, AI, DS"
+                           Text="{Binding Program}"
+                           FontSize="16"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Year Picker -->
+            <Frame Padding="0" BorderColor="#E0E0E0" CornerRadius="8">
+                <VerticalStackLayout Spacing="5" Padding="15">
+                    <Label Text="Year of Study" 
+                           FontSize="12" 
+                           TextColor="#757575"/>
+                    <Picker SelectedIndex="{Binding Year, Converter={StaticResource YearToIndexConverter}}"
+                            FontSize="16">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:Int32}">
+                                <x:Int32>1</x:Int32>
+                                <x:Int32>2</x:Int32>
+                                <x:Int32>3</x:Int32>
+                                <x:Int32>4</x:Int32>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- GPA Entry -->
+            <Frame Padding="0" BorderColor="#E0E0E0" CornerRadius="8">
+                <VerticalStackLayout Spacing="5" Padding="15">
+                    <Label Text="GPA (0.0 - 4.0)" 
+                           FontSize="12" 
+                           TextColor="#757575"/>
+                    <Entry Placeholder="Enter GPA"
+                           Text="{Binding Gpa}"
+                           Keyboard="Numeric"
+                           FontSize="16"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Buttons -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,20,0,0">
+                <Button Grid.Column="0"
+                        Text="Cancel"
+                        Command="{Binding CancelCommand}"
+                        BackgroundColor="#607D8B"
+                        TextColor="White"
+                        HeightRequest="50"
+                        CornerRadius="8"/>
+
+                <Button Grid.Column="1"
+                        Text="Save Student"
+                        Command="{Binding SaveCommand}"
+                        BackgroundColor="#4CAF50"
+                        TextColor="White"
+                        HeightRequest="50"
+                        CornerRadius="8"/>
+            </Grid>
+
+            <!-- Info Card -->
+            <Frame BackgroundColor="#E3F2FD" 
+                   BorderColor="#2196F3"
+                   Padding="15"
+                   Margin="0,20,0,0">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="ℹ️ Information"
+                           FontAttributes="Bold"
+                           TextColor="#1976D2"/>
+                    <Label Text="• Name: Required field"
+                           FontSize="12"
+                           TextColor="#424242"/>
+                    <Label Text="• Program: CS, SE, AI, DS, etc."
+                           FontSize="12"
+                           TextColor="#424242"/>
+                    <Label Text="• Year: Select 1-4"
+                           FontSize="12"
+                           TextColor="#424242"/>
+                    <Label Text="• GPA: Must be between 0.0 and 4.0"
+                           FontSize="12"
+                           TextColor="#424242"/>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
