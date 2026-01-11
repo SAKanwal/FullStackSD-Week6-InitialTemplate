@@ -32,11 +32,19 @@ namespace Week6_RESTFULAPI.ViewModels
                 set => SetProperty(ref _selectedStudent, value);
             }
 
-            public ICommand LoadStudentsCommand { get; }
+        private bool isRefreshing;
+        private bool isRefreshing1;
+
+        public bool IsRefreshing
+            { get => isRefreshing;
+              set => SetProperty(ref isRefreshing, value);
+            }
+        public ICommand LoadStudentsCommand { get; }
             public ICommand SearchCommand { get; }
             public ICommand DeleteCommand { get; }
             public ICommand AddStudentCommand { get; }
             public ICommand RefreshCommand { get; }
+
 
             public StudentsViewModel(IStudentService studentService)
             {
@@ -49,8 +57,6 @@ namespace Week6_RESTFULAPI.ViewModels
                 AddStudentCommand = new Command(async () => await NavigateToAddStudentAsync());
                 RefreshCommand = new Command(async () => await RefreshStudentsAsync());
 
-                // Load students on initialization
-                Task.Run(async () => await LoadStudentsAsync());
             }
 
             public async Task LoadStudentsAsync()
@@ -78,6 +84,7 @@ namespace Week6_RESTFULAPI.ViewModels
                 finally
                 {
                     IsBusy = false;
+                    IsRefreshing = false;
                 }
             }
 
@@ -180,8 +187,9 @@ namespace Week6_RESTFULAPI.ViewModels
                 await Shell.Current.GoToAsync("AddStudentPage");
             }
 
-            private async Task RefreshStudentsAsync()
+            public async Task RefreshStudentsAsync()
             {
+            Console.WriteLine("The value of is refreshing is",isRefreshing);
                 await LoadStudentsAsync();
             }
         
