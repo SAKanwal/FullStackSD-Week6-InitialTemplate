@@ -53,7 +53,7 @@ namespace Week6_RESTFULAPI.ViewModels
                 Task.Run(async () => await LoadStudentsAsync());
             }
 
-            private async Task LoadStudentsAsync()
+            public async Task LoadStudentsAsync()
             {
                 if (IsBusy)
                     return;

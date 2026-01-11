@@ -9,4 +9,6 @@ public partial class AddStudentPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
+
+    
 }

@@ -8,4 +8,11 @@ public partial class StudentPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (BindingContext is StudentsViewModel vm)
+            await vm.LoadStudentsAsync();
+    }
 }
