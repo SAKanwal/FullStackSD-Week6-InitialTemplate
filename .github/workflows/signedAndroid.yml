@@ -1,58 +1,51 @@
-﻿using Microsoft.Maui.Controls.PlatformConfiguration;
-using System;
-using System.Buffers.Text;
-using System.Text;
-using System.Xml.Linq;
-
-name: Android CI(MAUI)
+﻿name: Android CI (MAUI)
 
 on:
-push:
-branches: [main]
-pull_request:
-branches: [main]
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-build - android:
-    runs - on: ubuntu - latest
-
-
+  build-android:
+    runs-on: ubuntu-latest
+    
     steps:
--name: Checkout source
-        uses: actions / checkout@v5
-
-      - name: Setup.NET SDK
-        uses: actions / setup - dotnet@v4
+      - name: Checkout source
+        uses: actions/checkout@v5
+        
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet - version: "9.0.x"
-
+          dotnet-version: "9.0.x"
+          
       - name: Install MAUI Android workload
         run: dotnet workload install maui-android
         
       - name: Restore dependencies
-        run: dotnet restore MauiApp1.csproj -p:TargetFrameworks = net9.0 - android
-
+        run: dotnet restore MauiApp1.csproj -p:TargetFrameworks=net9.0-android
+        
       - name: Decode Keystore
         # This creates the physical .keystore file from your secret string
         run: |
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64--decode > release.keystore
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > release.keystore
 
       - name: Publish and Sign APK
         run: |
           dotnet publish MauiApp1.csproj \
           -c Release \
           -f net9.0-android \
-          -p:AndroidPackageFormat = apk \
-          -p:AndroidKeyStore = True \
-          -p:AndroidSigningKeyStore = release.keystore \
-          -p:AndroidSigningStorePass =${ { secrets.ANDROID_KEYSTORE_PASSWORD } } \
-          -p:AndroidSigningKeyAlias =${ { secrets.ANDROID_KEY_ALIAS } } \
-          -p:AndroidSigningKeyPass =${ { secrets.ANDROID_KEY_PASSWORD } } \
-          --no - restore
-
+          -p:AndroidPackageFormat=apk \
+          -p:AndroidKeyStore=True \
+          -p:AndroidSigningKeyStore=release.keystore \
+          -p:AndroidSigningStorePass=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} \
+          -p:AndroidSigningKeyAlias=${{ secrets.ANDROID_KEY_ALIAS }} \
+          -p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_PASSWORD }} \
+          --no-restore
+        
       - name: Upload Signed APK
-        uses: actions / upload - artifact@v4
+        uses: actions/upload-artifact@v4
         with:
-          name: Maui - App - Installable
+          name: Maui-App-Installable
           # This grabs only the final signed file
-          path: bin / Release / net9.0 - android/*-Signed.apk
+          path: bin/Release/net9.0-android/*-Signed.apk
