@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿//using Firebase.Database;
+using Microsoft.Extensions.Logging;
 
 using Week6_RESTFULAPI.Services;
 using Week6_RESTFULAPI.ViewModels;
@@ -25,12 +26,14 @@ namespace Week6_RESTFULAPI
             // Register HttpClient
             builder.Services.AddSingleton<HttpClient>();
 
+           // builder.Services.AddSingleton<FirebaseClient>();
+
             // Register Services
             // STEP 1: Use GitHub Service
             builder.Services.AddSingleton<IStudentService, GitHubStudentService>();
 
             // STEP 2: Later, comment line above and uncomment below to use Local API
-            // builder.Services.AddSingleton<IStudentService, LocalApiStudentService>();
+            //builder.Services.AddSingleton<IStudentService, FirebaseStudentService>();
 
             // Register ViewModels
             builder.Services.AddSingleton<StudentsViewModel>();
