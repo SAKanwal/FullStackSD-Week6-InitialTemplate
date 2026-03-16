@@ -22,10 +22,10 @@ jobs:
         run: dotnet workload install maui-windows
       
       - name: Publish Windows EXE
-        run: dotnet publish Week6-RESTFULAPI.csproj -f net9.0-windows10.0.19041.0 -c Release -p:WindowsPackageType=None -p:WindowsAppSDKSelfContained=true
+        run: dotnet publish Week6-RESTFULAPI.csproj -f net9.0-windows10.0.19041.0 -c Release -p:TargetFrameworks=net9.0-windows10.0.19041.0 -p:WindowsPackageType=None -p:WindowsAppSDKSelfContained=true
       
       - name: Upload Windows App
         uses: actions/upload-artifact@v4
         with:
           name: windows-exe
-          path: bin/Release/net9.0-windows10.0.19041.0/win10-x64/publish/
+          path: bin/Release/net9.0-windows10.0.19041.0/**/publish/
