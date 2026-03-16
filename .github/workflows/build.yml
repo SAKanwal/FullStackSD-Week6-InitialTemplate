@@ -1,12 +1,10 @@
 name: Windows Build (MAUI)
-
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
 jobs:
   build-windows:
     runs-on: windows-latest
@@ -22,17 +20,15 @@ jobs:
       
       - name: Install MAUI Windows workload
         run: dotnet workload install maui-windows
-
       
       - name: Restore
-        run: dotnet restore Week6-RESTFULAPI.csproj -p:TargetFrameworks=net9.0-windows10.0.19041.0 -p:RuntimeIdentifierOverride=win10-x64 -p:RuntimeIdentifier=win-x64
-
+        run: dotnet restore Week6-RESTFULAPI.csproj -p:TargetFrameworks=net9.0-windows10.0.19041.0 -p:RuntimeIdentifier=win10-x64
+      
       - name: Publish Windows EXE
-        run: dotnet publish Week6-RESTFULAPI.csproj -f net9.0-windows10.0.19041.0 -c Release -p:RuntimeIdentifierOverride=win10-x64 -p:RuntimeIdentifier=win-x64 -p:WindowsPackageType=None -p:WindowsAppSDKSelfContained=true --no-restore
-
+        run: dotnet publish Week6-RESTFULAPI.csproj -f net9.0-windows10.0.19041.0 -c Release -p:RuntimeIdentifier=win10-x64 -p:WindowsPackageType=None -p:WindowsAppSDKSelfContained=true --no-restore
+      
       - name: Upload Windows App
         uses: actions/upload-artifact@v4
         with:
           name: windows-exe
           path: bin/Release/net9.0-windows10.0.19041.0/win10-x64/publish/
-      
